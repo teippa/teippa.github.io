@@ -64,28 +64,6 @@ function distributeMoney(participants) {
   return results;
 }
 
-function addStructure() {
-
-  
-  // const buttonsDiv = document.getElementById("buttons")
-
-  // const button = document.createElement('button')
-  //   button.innerText = 'Lisää osallistuja'
-  //   button.class="btn btn-primary"
-  //   button.type = "button"
-  //   button.addEventListener('click', () => {
-  //     addContributorField(mainTable)
-  //   })
-  //   buttonsDiv.appendChild(button)
-
-
-  // const button_calc = document.createElement('button')
-  //   button_calc.innerText = 'Laske'
-  //   button_calc.addEventListener('click', () => {
-  //     calculatePayments();
-  //   })
-  //   buttonsDiv.appendChild(button_calc)
-}
 
 function createInput(type, value='') {
   d = document.createElement("div");
@@ -98,19 +76,6 @@ function createInput(type, value='') {
   return d
 }
 
-function addDetailRow_old(table) {
-  detailRow = document.createElement("tr");
-
-    let cell_summa = document.createElement('td');
-    cell_summa.appendChild(createInput("number", "esim. 25.50"));
-    let cell_kustannus = document.createElement('td');
-    cell_kustannus.appendChild(createInput("text", "Esim. Limpparit"));
-
-  detailRow.appendChild(cell_summa);
-  detailRow.appendChild(cell_kustannus);
-
-  table.appendChild(detailRow)
-}
 
 function addDetailRow(detailsDiv) {
           //     <div class="row"> 
@@ -178,38 +143,6 @@ function addContributorField() {
 }
 
 
-function addContributorField_old() {
-  const table = document.getElementById("contributorTable");
-  const row = document.createElement('tr');
-
-  const cell_nimi = document.createElement('td');
-    cell_nimi.appendChild(createInput("text", "esim. Makke"));
-
-  const cell_details = document.createElement('td');
-    const detailTable = document.createElement("table"); 
-      const button_newDetail = document.createElement('div');
-      button_newDetail.className += " btn btn-secondary"
-      button_newDetail.innerText = '+';
-
-      // Attach the "click" event to your button
-      button_newDetail.addEventListener('click', () => {
-        addDetailRow(detailTable);
-      })
-    cell_details.appendChild(detailTable);
-
-
-  const cell_newSummaKust = document.createElement('td');
-    cell_newSummaKust.appendChild(button_newDetail);
-
-  row.appendChild(cell_nimi)
-  row.appendChild(cell_details)
-  row.appendChild(cell_newSummaKust)
-
-  addDetailRow(detailTable)
-
-  table.appendChild(row)
-
-}
 
 
 function collectData() {
@@ -232,35 +165,6 @@ function collectData() {
       if (!cost) {cost = 0}
 
       participant.price += cost;
-      participant.reason += `${reason}, `
-    }
-    participants.push(participant)
-  }
-  return participants
-}
-
-function collectData_old() {
-  let participants = []
-  const mainTable = document.getElementById("contributorTable");
-
-  results = []
-  for (let i = 1; i<mainTable.children.length; i++) {
-    userRow = mainTable.children[i];
-
-    nameCell = userRow.children[0].children[0];
-    participant = new Participant(nameCell.value)
-
-
-    detailsCollection = userRow.children[1].children[0].children;
-    for (j = 0; j<detailsCollection.length; j++) {
-      detail = detailsCollection[j]
-      cost = parseFloat(detail.children[0].children[0].value);
-      reason = detail.children[1].children[0].value;
-
-      if (!cost) {cost = 0}
-
-      // console.log(cost, reason)
-      participant.price += parseFloat(cost);
       participant.reason += `${reason}, `
     }
     participants.push(participant)
@@ -302,16 +206,3 @@ function calculatePayments() {
   })
 }
 
-
-
-const participants = [
-  new Participant("Teijo", "50", "Kakku"),
-  new Participant("Teemu", "20", "Kukka"),
-  new Participant("Aapo", "50", "Kakka"),
-  new Participant("Matti"),
-]
-
-
-
-
-addStructure()
