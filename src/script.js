@@ -14,22 +14,21 @@ function distributeMoney(participants) {
   const totalPrice = participants.reduce((total, p) => { return total + p.price }, 0)
   const priceForEach = totalPrice/participants.length
 
-  console.log(totalPrice, priceForEach)
+  // console.log(totalPrice, priceForEach)
 
 
   // Calculate and print relative costs
   participants.forEach((p)=> {
     p.price = priceForEach - p.price
-    console.log(`${p.name}\t${p.price}\t${p.reason}`);
+    // console.log(`${p.name}\t${p.price}\t${p.reason}`);
   })
 
   results = []
-  resultStr = ""
 
   for (let i = 0; i < participants.length; i++) {
     const p_maksaja = participants[i];
 
-    if (p_maksaja.price <= 0) {
+    if (p_maksaja.price.toFixed(5) <= 0) {
       continue
     }
 
@@ -39,24 +38,21 @@ function distributeMoney(participants) {
     }
     
       
-    resultStr += `${p_maksaja.name} maksaa\n`;
     for (let j = participants.length-1; j >= 0; j--) {
       const p_saaja = participants[j];
 
-      if (p_saaja.price.toFixed(3) == 0) {
+      if (p_saaja.price.toFixed(5) == 0) {
         continue;
       }
       
       const maksuLopputulos = (p_saaja.price + p_maksaja.price).toFixed(3);
 
       if (maksuLopputulos <= 0) {
-        resultStr += `\t${p_saaja.name}:lle\t${p_maksaja.price} €\n`;
         result.maksut.push(`\t${p_saaja.name}:lle\t${p_maksaja.price.toFixed(3)} €\n`);
         p_saaja.price += p_maksaja.price;
         p_maksaja.price = 0;
         break;
       } else if (maksuLopputulos > 0) {
-        resultStr += `\t${p_saaja.name}:lle\t${-p_saaja.price} €\n`;
         result.maksut.push(`\t${p_saaja.name}:lle\t${-p_saaja.price.toFixed(3)} €\n`);
         p_maksaja.price += p_saaja.price;
         p_saaja.price = 0;
@@ -65,7 +61,6 @@ function distributeMoney(participants) {
     }
     results.push(result)
   }
-  // console.log(resultStr);
   return results;
 }
 
@@ -177,16 +172,23 @@ function collectData() {
   return participants
 }
 
+const removeChilds = (parent) => {
+    while (parent.lastChild) {
+        parent.removeChild(parent.lastChild);
+    }
+};
+
 function calculatePayments() {
   const participants = collectData();
 
   const results = distributeMoney(participants);
 
   const maksajatList = document.getElementById("results");
-  console.log(results)
+  removeChilds(maksajatList)
+  // console.log(results)
 
   results.forEach((r) => {
-    console.log(r.maksaja)
+    // console.log(r.maksaja)
     const a1 = document.createElement("li")
     a1.innerText = r.maksaja;
     maksajatList.appendChild(a1)
@@ -199,7 +201,7 @@ function calculatePayments() {
       const b1 = document.createElement("li")
       b1.innerText = m;
       maksettavatList.appendChild(b1)
-      console.log(m)
+      // console.log(m)
     })
   })
 }
