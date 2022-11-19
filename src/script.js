@@ -88,13 +88,17 @@ function addStructure() {
 }
 
 function createInput(type, value='') {
+  d = document.createElement("div");
+  d.className += " input-group mb-3"
   var mi = document.createElement("input");
   mi.setAttribute('type', type);
   mi.setAttribute('placeholder', value);
-  return mi
+  mi.className += " form-control"
+  d.appendChild(mi)
+  return d
 }
 
-function addDetailRow(table) {
+function addDetailRow_old(table) {
   detailRow = document.createElement("tr");
 
     let cell_summa = document.createElement('td');
@@ -108,7 +112,73 @@ function addDetailRow(table) {
   table.appendChild(detailRow)
 }
 
+function addDetailRow(detailsDiv) {
+          //     <div class="row"> 
+          //       <div class="col-lg-3 col-md-4">Summa(€)</div>
+          //       <div class="col-lg-9 col-md-8">Kustannus</div> 
+          //     </div>
+  detailRow = document.createElement("div");
+    detailRow.className += " row"
+
+    const summaCol = document.createElement('div');
+      summaCol.className += " col-lg-4 col-md-4"
+      summaCol.appendChild(createInput("number", "esim. 25.50"))
+
+    const kustannusCol = document.createElement('div');
+      kustannusCol.className += " col-lg-8 col-md-8"
+      kustannusCol.appendChild(createInput("text", "Esim. Limpparit"))
+
+
+
+  detailRow.appendChild(summaCol);
+  detailRow.appendChild(kustannusCol);
+
+  detailsDiv.appendChild(detailRow)
+}
+
 function addContributorField() {
+
+          // <div class="row"> 
+          //   <div class="col-lg-3 col-md-4">Nimi</div>
+          //   <div class="col-lg-6 col-md-6">
+          //   </div>
+          //   <div class="col-lg-3 col-md-2">+</div> 
+          // </div> 
+  const contributorsDiv = document.getElementById("contributorDiv");
+
+  const row = document.createElement('div');
+    row.className += " row"
+
+    const nimiCol = document.createElement('div');
+      nimiCol.className += " col-lg-3 col-md-4"
+      nimiCol.appendChild(createInput("text", "esim. Makke"))
+
+    const detailsCol = document.createElement('div');
+      detailsCol.className += " col-lg-8 col-md-6"
+
+    const buttonCol = document.createElement('div');
+      buttonCol.className += " col-lg-1 col-md-2"
+        const button_newDetail = document.createElement('div');
+        button_newDetail.className += " btn btn-secondary"
+        button_newDetail.innerText = '+';
+
+        // Attach the "click" event to your button
+        button_newDetail.addEventListener('click', () => {
+          addDetailRow(detailsCol);
+        })
+        buttonCol.appendChild(button_newDetail)
+
+
+  row.appendChild(nimiCol)
+  row.appendChild(detailsCol)
+  row.appendChild(buttonCol)
+  contributorsDiv.appendChild(row)
+
+  addDetailRow(detailsCol)
+}
+
+
+function addContributorField_old() {
   const table = document.getElementById("contributorTable");
   const row = document.createElement('tr');
 
@@ -143,6 +213,33 @@ function addContributorField() {
 
 
 function collectData() {
+  let participants = []
+  const contributorDiv = document.getElementById("contributorDiv");
+
+  results = []
+  for (let i = 0; i<contributorDiv.children.length; i++) {
+    userRow = contributorDiv.children[i];
+
+    nameCell = userRow.children[0].children[0].children[0];
+    participant = new Participant(nameCell.value)
+
+    detailsCollection = userRow.children[1].children;
+    for (j = 0; j<detailsCollection.length; j++) {
+      detail = detailsCollection[j]
+      cost = parseFloat(detail.children[0].children[0].children[0].value);
+      reason = detail.children[1].children[0].children[0].value;
+
+      if (!cost) {cost = 0}
+
+      participant.price += cost;
+      participant.reason += `${reason}, `
+    }
+    participants.push(participant)
+  }
+  return participants
+}
+
+function collectData_old() {
   let participants = []
   const mainTable = document.getElementById("contributorTable");
 
@@ -193,7 +290,7 @@ function calculatePayments() {
     maksajatList.appendChild(a1)
 
     maksettavatList = document.createElement("ul")
-    maksettavatList.class = "results"
+    maksettavatList.className += " results_b"
     maksajatList.appendChild(maksettavatList)
 
     r.maksut.forEach((m) => {
