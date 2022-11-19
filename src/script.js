@@ -23,6 +23,12 @@ function distributeMoney(participants) {
     // console.log(`${p.name}\t${p.price}\t${p.reason}`);
   })
 
+  let summary = 'ew'
+  if (priceForEach) {
+    summary = `Yhteensä: ${totalPrice.toFixed(2)}€, ${priceForEach.toFixed(2)}€/hlö.`
+  } else {
+    summary = `Lisää osallistujia lomakkeeseen`
+  }
   results = []
 
   for (let i = 0; i < participants.length; i++) {
@@ -45,15 +51,15 @@ function distributeMoney(participants) {
         continue;
       }
       
-      const maksuLopputulos = (p_saaja.price + p_maksaja.price).toFixed(3);
+      const maksuLopputulos = (p_saaja.price + p_maksaja.price).toFixed(2);
 
       if (maksuLopputulos <= 0) {
-        result.maksut.push(`\t${p_saaja.name}:lle\t${p_maksaja.price.toFixed(3)} €\n`);
+        result.maksut.push(`\t${p_saaja.name}:lle\t${p_maksaja.price.toFixed(2)} €\n`);
         p_saaja.price += p_maksaja.price;
         p_maksaja.price = 0;
         break;
       } else if (maksuLopputulos > 0) {
-        result.maksut.push(`\t${p_saaja.name}:lle\t${-p_saaja.price.toFixed(3)} €\n`);
+        result.maksut.push(`\t${p_saaja.name}:lle\t${-p_saaja.price.toFixed(2)} €\n`);
         p_maksaja.price += p_saaja.price;
         p_saaja.price = 0;
       }
@@ -61,18 +67,37 @@ function distributeMoney(participants) {
     }
     results.push(result)
   }
-  return results;
+  return [results, summary];
 }
 
 
 function createInput(type, value='') {
   d = document.createElement("div");
-  d.className += " input-group mb-3"
+  d.className += " input-group input-group-sm mb-2"
   var mi = document.createElement("input");
-  mi.setAttribute('type', type);
-  mi.setAttribute('placeholder', value);
-  mi.className += " form-control"
+    mi.className += " form-control"
+    mi.setAttribute('type', type);
+    mi.setAttribute('placeholder', value);
   d.appendChild(mi)
+  return d
+}
+
+function createInputGroup(types, values=['', '']) {
+  d = document.createElement("div");
+  d.className += " input-group input-group-sm mb-1"
+
+  var mi1 = document.createElement("input");
+    mi1.className += " form-control col-sm-4"
+    mi1.setAttribute('type', types[0]);
+    mi1.setAttribute('placeholder', values[0]);
+
+  var mi2 = document.createElement("input");
+    mi2.className += " form-control col-sm-8"
+    mi2.setAttribute('type', types[1]);
+    mi2.setAttribute('placeholder', values[1]);
+
+  d.appendChild(mi1)
+  d.appendChild(mi2)
   return d
 }
 
@@ -86,17 +111,17 @@ function addDetailRow(detailsDiv) {
     detailRow.className += " row"
 
     const summaCol = document.createElement('div');
-      summaCol.className += " col-md-4 col-sm-4"
-      summaCol.appendChild(createInput("number", "esim. 25.50"))
+      summaCol.className += " col-md-12 col-sm-12"
+      summaCol.appendChild(createInputGroup(["number", "text"], ["esim. 25.50", "Esim. Limpparit"]))
 
-    const kustannusCol = document.createElement('div');
-      kustannusCol.className += " col-md-8 col-sm-8"
-      kustannusCol.appendChild(createInput("text", "Esim. Limpparit"))
+    // const kustannusCol = document.createElement('div');
+    //   kustannusCol.className += " col-md-8 col-sm-8"
+    //   kustannusCol.appendChild(createInput("text", "Esim. Limpparit"))
 
 
 
   detailRow.appendChild(summaCol);
-  detailRow.appendChild(kustannusCol);
+  // detailRow.appendChild(kustannusCol);
 
   detailsDiv.appendChild(detailRow)
 }
@@ -124,7 +149,7 @@ function addContributorField() {
     const buttonCol = document.createElement('div');
       buttonCol.className += " col-md-1 col-sm-1"
         const button_newDetail = document.createElement('div');
-        button_newDetail.className += " btn btn-secondary"
+        button_newDetail.className += " btn btn-sm btn-secondary"
         button_newDetail.innerText = '+';
 
         // Attach the "click" event to your button
@@ -158,9 +183,10 @@ function collectData() {
 
     detailsCollection = userRow.children[1].children;
     for (j = 0; j<detailsCollection.length; j++) {
-      detail = detailsCollection[j]
-      cost = parseFloat(detail.children[0].children[0].children[0].value);
-      reason = detail.children[1].children[0].children[0].value;
+      detail = detailsCollection[j].children[0].children[0]
+      console.log(detail)
+      cost = parseFloat(detail.children[0].value);
+      reason = detail.children[1].value;
 
       if (!cost) {cost = 0}
 
@@ -181,11 +207,17 @@ const removeChilds = (parent) => {
 function calculatePayments() {
   const participants = collectData();
 
-  const results = distributeMoney(participants);
+  const out = distributeMoney(participants);
+  const results = out[0];
+  const summary = out[1];
+
+  const summaryDiv = document.getElementById("summary");
+  summaryDiv.innerText = summary;
 
   const maksajatList = document.getElementById("results");
   removeChilds(maksajatList)
   // console.log(results)
+
 
   results.forEach((r) => {
     // console.log(r.maksaja)
