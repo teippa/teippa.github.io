@@ -66,28 +66,25 @@ function distributeMoney(participants) {
 
 function addStructure() {
 
-  const mainTable = document.getElementById("contributorTable");
+  
+  // const buttonsDiv = document.getElementById("buttons")
 
-  const button = document.createElement('button')
-  // Set the button text to 'Can you click me?'
-  button.innerText = 'Lisää osallistuja'
+  // const button = document.createElement('button')
+  //   button.innerText = 'Lisää osallistuja'
+  //   button.class="btn btn-primary"
+  //   button.type = "button"
+  //   button.addEventListener('click', () => {
+  //     addContributorField(mainTable)
+  //   })
+  //   buttonsDiv.appendChild(button)
 
-  // Attach the "click" event to your button
-  button.addEventListener('click', () => {
-    addContributorField(mainTable)
-  })
-  document.body.appendChild(button)
 
-
-  const button_calc = document.createElement('button')
-  // Set the button text to 'Can you click me?'
-  button_calc.innerText = 'Laske'
-
-  // Attach the "click" event to your button
-  button_calc.addEventListener('click', () => {
-    calculatePayments();
-  })
-  document.body.appendChild(button_calc)
+  // const button_calc = document.createElement('button')
+  //   button_calc.innerText = 'Laske'
+  //   button_calc.addEventListener('click', () => {
+  //     calculatePayments();
+  //   })
+  //   buttonsDiv.appendChild(button_calc)
 }
 
 function createInput(type, value='') {
@@ -111,7 +108,8 @@ function addDetailRow(table) {
   table.appendChild(detailRow)
 }
 
-function addContributorField(table) {
+function addContributorField() {
+  const table = document.getElementById("contributorTable");
   const row = document.createElement('tr');
 
   const cell_nimi = document.createElement('td');
@@ -119,7 +117,8 @@ function addContributorField(table) {
 
   const cell_details = document.createElement('td');
     const detailTable = document.createElement("table"); 
-      const button_newDetail = document.createElement('button');
+      const button_newDetail = document.createElement('div');
+      button_newDetail.className += " btn btn-secondary"
       button_newDetail.innerText = '+';
 
       // Attach the "click" event to your button

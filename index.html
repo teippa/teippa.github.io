@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="src/style.css">
   </head>
   <body>
@@ -19,10 +20,27 @@
       </thead>
 
     </table>
-
-    <script src="src/script.js"></script>
-    <br>
+    <div id="buttons">
+      <button 
+        type="button" 
+        class="btn btn-primary"
+        onClick="addContributorField()">
+          Lisää osallistuja
+      </button>
+      <button 
+        type="button" 
+        class="btn btn-primary"
+        onclick="calculatePayments()">
+          Laske maksut
+      </button>
+    </div>
     <ul class="results" id="results"></ul> 
+
+    <script src="src/script.js"></script>        
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    
 
   </body>
 </html>
