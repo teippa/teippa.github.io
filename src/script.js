@@ -86,11 +86,11 @@ function addDetailRow(detailsDiv) {
     detailRow.className += " row"
 
     const summaCol = document.createElement('div');
-      summaCol.className += " col-lg-4 col-md-4"
+      summaCol.className += " col-md-4 col-sm-4"
       summaCol.appendChild(createInput("number", "esim. 25.50"))
 
     const kustannusCol = document.createElement('div');
-      kustannusCol.className += " col-lg-8 col-md-8"
+      kustannusCol.className += " col-md-8 col-sm-8"
       kustannusCol.appendChild(createInput("text", "Esim. Limpparit"))
 
 
@@ -115,14 +115,14 @@ function addContributorField() {
     row.className += " row"
 
     const nimiCol = document.createElement('div');
-      nimiCol.className += " col-lg-3 col-md-4"
+      nimiCol.className += " col-md-3 col-sm-12"
       nimiCol.appendChild(createInput("text", "esim. Makke"))
 
     const detailsCol = document.createElement('div');
-      detailsCol.className += " col-lg-8 col-md-6"
+      detailsCol.className += " col-md-8 col-sm-11"
 
     const buttonCol = document.createElement('div');
-      buttonCol.className += " col-lg-1 col-md-2"
+      buttonCol.className += " col-md-1 col-sm-1"
         const button_newDetail = document.createElement('div');
         button_newDetail.className += " btn btn-secondary"
         button_newDetail.innerText = '+';
