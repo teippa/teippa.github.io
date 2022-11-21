@@ -184,7 +184,7 @@ function collectData() {
     detailsCollection = userRow.children[1].children;
     for (j = 0; j<detailsCollection.length; j++) {
       detail = detailsCollection[j].children[0].children[0]
-      console.log(detail)
+      // console.log(detail)
       cost = parseFloat(detail.children[0].value);
       reason = detail.children[1].value;
 
@@ -238,3 +238,4 @@ function calculatePayments() {
   })
 }
 
+addContributorField()
