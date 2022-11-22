@@ -238,4 +238,4 @@ function calculatePayments() {
   })
 }
 
-addContributorField()
+// addContributorField()
