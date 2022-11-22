@@ -87,12 +87,12 @@ function createInputGroup(types, values=['', '']) {
   d.className += " input-group input-group-sm mb-1"
 
   var mi1 = document.createElement("input");
-    mi1.className += " form-control col-sm-4"
+    mi1.className += " form-control col-4"
     mi1.setAttribute('type', types[0]);
     mi1.setAttribute('placeholder', values[0]);
 
   var mi2 = document.createElement("input");
-    mi2.className += " form-control col-sm-8"
+    mi2.className += " form-control col-8"
     mi2.setAttribute('type', types[1]);
     mi2.setAttribute('placeholder', values[1]);
 
