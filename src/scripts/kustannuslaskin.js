@@ -114,11 +114,6 @@ function addDetailRow(detailsDiv) {
       summaCol.className += " col-md-12 col-sm-12"
       summaCol.appendChild(createInputGroup(["number", "text"], ["esim. 25.50", "Esim. Limpparit"]))
 
-    // const kustannusCol = document.createElement('div');
-    //   kustannusCol.className += " col-md-8 col-sm-8"
-    //   kustannusCol.appendChild(createInput("text", "Esim. Limpparit"))
-
-
 
   detailRow.appendChild(summaCol);
   // detailRow.appendChild(kustannusCol);
@@ -137,7 +132,7 @@ function addContributorField() {
   const contributorsDiv = document.getElementById("contributorDiv");
 
   const row = document.createElement('div');
-    row.className += " row"
+    row.className += " row mt-2"
 
     const nimiCol = document.createElement('div');
       nimiCol.className += " col-md-3 col-sm-12"
@@ -167,7 +162,12 @@ function addContributorField() {
   addDetailRow(detailsCol)
 }
 
-
+function removeContributorField() {
+  const contributorsDiv = document.getElementById("contributorDiv");
+  if (contributorDiv.children.length > 0) {
+    contributorDiv.removeChild(contributorDiv.children[contributorDiv.children.length -1])
+  }
+}
 
 
 function collectData() {
