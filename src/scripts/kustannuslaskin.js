@@ -23,7 +23,7 @@ function distributeMoney(participants) {
     // console.log(`${p.name}\t${p.price}\t${p.reason}`);
   })
 
-  let summary = 'ew'
+  let summary = ''
   if (priceForEach) {
     summary = `Yhteensä: ${totalPrice.toFixed(2)}€, ${priceForEach.toFixed(2)}€/hlö.`
   } else {
